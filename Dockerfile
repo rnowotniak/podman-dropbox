@@ -10,7 +10,7 @@ WORKDIR /root
 
 RUN apt-get update && apt-get upgrade
 RUN apt-get install -y python3 wget
-RUN wget --no-verbose -O /var/tmp/dropbox.$ARCH.tgz "$DROPBOXBIN_URL" # | tar xzf -
+RUN wget --no-verbose -O /var/tmp/dropbox.$ARCH.tgz "$DROPBOXBIN_URL"
 RUN wget -O /var/tmp/dropbox.py "$DROPBOXPY_URL" && chmod 700 /var/tmp/dropbox.py
 
 ENV PATH="$PATH:/root/bin"
