@@ -92,6 +92,7 @@ $ podman ps -a -f name=dbox
 CONTAINER ID  IMAGE                  COMMAND               CREATED         STATUS                    PORTS       NAMES
 55a308dc5676  localhost/dbox:latest  /bin/sh -c exec /...  45 minutes ago  Exited (1) 3 minutes ago              dbox
 $ _
+```
 
 ### Start the same dbox container again
 ```
