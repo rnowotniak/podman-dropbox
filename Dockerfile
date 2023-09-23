@@ -6,6 +6,9 @@ ENV ARCH=x86_64
 ARG DROPBOXBIN_URL=https://www.dropbox.com/download?plat=lnx.$ARCH
 ARG DROPBOXPY_URL=https://www.dropbox.com/download?dl=packages/dropbox.py
 
+# root in the container will be the same UID as your (non-root) user outside.
+# Otherwise (non-root in container) there would be permission issues with your Dropbox files (different ownership inside and outside the container)
+USER root
 WORKDIR /root
 
 RUN apt-get -y update && apt-get -y upgrade
@@ -15,5 +18,6 @@ RUN wget -O /var/tmp/dropbox.py "$DROPBOXPY_URL" && chmod 700 /var/tmp/dropbox.p
 
 ENV PATH="$PATH:/root/bin"
 
-CMD mkdir -p ~/bin; mv /var/tmp/dropbox.py ~/bin/ ; cd && tar xzvf /var/tmp/dropbox.$ARCH.tgz && ~/.dropbox-dist/dropboxd
+COPY --chmod=0700 run.sh /var/tmp/
+CMD exec /var/tmp/run.sh
 
