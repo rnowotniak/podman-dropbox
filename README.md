@@ -10,7 +10,7 @@ you can use this project, to run Dropbox in a podman container.
 $ git clone https://github.com/rnowotniak/podman-dropbox.git
 $ cd podman-dropbox
 
-$ podman build -t dbox .
+$ podman build -t dbox . # --no-cache # (there might be a newer Dropbox version available on the upstream)
 (...)
 
 $ podman images
@@ -21,10 +21,11 @@ $ _
 
 ## Run the container
 ```
-DROPBOX_DIR=/mnt/wdext/Dropbox-podman    # it will contain Drobox installation, and Dropbox/ subdir with your files
+DROPBOX_DIR=/mnt/sata/Dropbox-podman    # it will contain Drobox installation, and Dropbox/ subdir with your files
 DROPBOX_HOSTNAME=podman-dbox             # you will see this in your linked devices list in Drobox security panel
 
-podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
+# --init is required because dropboxd will try to update itself regularly, thus the main process will be killed
+podman run --init --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
 ```
 
 ## Check the Dropbox log

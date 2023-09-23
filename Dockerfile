@@ -8,7 +8,7 @@ ARG DROPBOXPY_URL=https://www.dropbox.com/download?dl=packages/dropbox.py
 
 WORKDIR /root
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get install -y python3 wget
 RUN wget --no-verbose -O /var/tmp/dropbox.$ARCH.tgz "$DROPBOXBIN_URL"
 RUN wget -O /var/tmp/dropbox.py "$DROPBOXPY_URL" && chmod 700 /var/tmp/dropbox.py
