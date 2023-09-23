@@ -24,8 +24,7 @@ $ _
 DROPBOX_DIR=/mnt/sata/Dropbox-podman    # it will contain Drobox installation, and Dropbox/ subdir with your files
 DROPBOX_HOSTNAME=podman-dbox             # you will see this in your linked devices list in Drobox security panel
 
-# --init is required because dropboxd will try to update itself regularly, thus the main process will be killed
-podman run --init --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
+podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
 ```
 
 ## Check the Dropbox log
@@ -71,6 +70,37 @@ $ _
 
 $ du -sch $DROPBOX_DIR/Dropbox/
 718M	/mnt/wdext/Dropbox-podman/Dropbox/
+$ _
+```
+
+## Stop and (re)start the container
+### Stop
+```
+$ podman exec dbox dropbox.py stop
+$ podman logs -f dbox
+(...)
+dropbox: load fq extension '/root/.dropbox-dist/dropbox-lnx.x86_64-183.4.7058/tornado.speedups.cpython-38-x86_64-linux-gnu.so'
+dropbox: load fq extension '/root/.dropbox-dist/dropbox-lnx.x86_64-183.4.7058/wrapt._wrappers.cpython-38-x86_64-linux-gnu.so'
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0   4360  3160 ?        Ss   15:28   0:00 /bin/bash /var/tmp/run.sh
+root          11  0.0  0.0   2820  1024 ?        S    15:28   0:00 tail -f nohup.out
+root         135  0.0  0.0   7060  1544 ?        R    15:31   0:00 ps auxfw
+No dropbox process is running, terminating the container.
+$ _
+
+$ podman ps -a -f name=dbox
+CONTAINER ID  IMAGE                  COMMAND               CREATED         STATUS                    PORTS       NAMES
+55a308dc5676  localhost/dbox:latest  /bin/sh -c exec /...  45 minutes ago  Exited (1) 3 minutes ago              dbox
+$ _
+
+### Start the same dbox container again
+```
+$ podman start dbox
+dbox
+$ _
+
+$ podman exec dbox dropbox.py status
+Up to date
 $ _
 ```
 
