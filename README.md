@@ -27,6 +27,9 @@ DROPBOX_HOSTNAME=podman-dbox             # you will see this in your linked devi
 podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
 ```
 
+Caveat: Dropbox tries to auto-update itself on a regular basis. (see: https://wiki.archlinux.org/title/dropbox#Prevent\_automatic\_updates ).
+This podman image takes care of this, and handles it accordigly (in run.sh script).
+
 ## Check the Dropbox log
 ```
 $ podman logs -f dbox
