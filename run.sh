@@ -13,7 +13,7 @@ tail -f nohup.out &
 trap "echo 'TERM signal received'; dropbox.py stop" TERM
 
 while true; do
-	sleep 7
+	sleep 2
 	pidof dropbox &>/dev/null || { ps auxfw; echo "No dropbox process is running, terminating the container."; exit 1; }
 done
 	
