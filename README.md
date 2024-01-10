@@ -58,6 +58,30 @@ This computer is now linked to Dropbox. Welcome Robert
 
 ## Check Dropbox status
 ```
+$ podman exec -t dbox dropbox.py
+Dropbox command-line interface
+
+commands:
+Note: use dropbox help <command> to view usage for a specific command.
+
+ autostart    automatically start Dropbox at login
+ exclude      ignores/excludes a directory from syncing
+ filestatus   get current sync status of one or more files
+ help         provide help
+ lansync      enables or disables LAN sync
+ ls           list directory contents with current sync status
+ proxy        set proxy settings for Dropbox
+ running      return whether Dropbox is running
+ sharelink    get a shared link for a file in your Dropbox
+ start        start dropboxd
+ status       get current status of the dropboxd
+ stop         stop dropboxd
+ throttle     set bandwidth limits for Dropbox
+ update       download latest version of Dropbox
+ version      print version information for Dropbox
+$ _
+
+
 $ podman exec dbox dropbox.py status
 Syncing 139,954 files • 58 mins
 Downloading 139,954 files (0.0 KB/sec, 58 mins)
