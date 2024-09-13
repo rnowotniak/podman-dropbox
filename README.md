@@ -21,8 +21,8 @@ $ _
 
 ## Run the container
 ```
-DROPBOX_DIR=/mnt/sata/Dropbox-podman    # it will contain Drobox installation, and Dropbox/ subdir with your files
-DROPBOX_HOSTNAME=podman-dbox             # you will see this in your linked devices list in Drobox security panel
+DROPBOX_DIR=/mnt/sata/Dropbox-podman      # it will contain Drobox installation, and Dropbox/ subdir with your files
+DROPBOX_HOSTNAME=`hostname`-podman-dbox   # you will see this in your linked devices list in Drobox security panel
 
 podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
 ```
