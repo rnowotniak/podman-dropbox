@@ -25,7 +25,13 @@ DROPBOX_DIR=/mnt/sata/Dropbox-podman      # it will contain Drobox installation,
 DROPBOX_HOSTNAME=`hostname`-podman-dbox   # you will see this in your linked devices list in Drobox security panel
 
 podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
+
+# or (for lansync):
+
+podman run --hostname=$DROPBOX_HOSTNAME --name dbox --network=host -d -v $DROPBOX_DIR:/root dbox
 ```
+
+Ports to be whitelisted for lansync: 17500/tcp 17500/udp 17600-17608/tcp
 
 **Caveat**: Dropbox tries to auto-update itself on a regular basis. (see: https://wiki.archlinux.org/title/dropbox#Prevent_automatic_updates ).
 This podman image takes care of this, and handles it accordigly (in run.sh script).
