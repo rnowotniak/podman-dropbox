@@ -1,20 +1,20 @@
 #!/bin/bash
 
 set -e
+set -x
+
+cd
+pwd
 
 ps auxfw
 mkdir -p ~/bin
 cp -f /var/tmp/dropbox.py ~/bin/
 tar xzvf /var/tmp/dropbox.$ARCH.tgz || exit 1
-nohup ~/.dropbox-dist/dropboxd 2>&1 &
-ps auxfw
-tail -f nohup.out &
 
-trap "echo 'TERM signal received'; dropbox.py stop" TERM
+trap 'echo "SIGTERM received. Will run dropbox stop, and will wait for proc $PID to be gone"; set -x; ps auxfw; dropbox.py stop; wait $PID; exit $?' SIGTERM
 
-while true; do
-	sleep 2
-	pidof dropbox &>/dev/null || { ps auxfw; echo "No dropbox process is running, terminating the container."; exit 1; }
-done
-	
+~/.dropbox-dist/dropboxd &
+PID=$!
+wait $PID
+exit $?
 

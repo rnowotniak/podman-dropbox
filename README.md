@@ -20,15 +20,40 @@ $ _
 ```
 
 ## Run the container
+Set variables accordingly:
 ```
-DROPBOX_DIR=/mnt/sata/Dropbox-podman      # it will contain Drobox installation, and Dropbox/ subdir with your files
-DROPBOX_HOSTNAME=`hostname`-podman-dbox   # you will see this in your linked devices list in Drobox security panel
+export DROPBOX_DIR=/mnt/sata/Dropbox-podman      # it will contain Drobox installation, and Dropbox/ subdir with your files
+export DROPBOX_HOSTNAME=`hostname`-podman-dbox   # you will see this in your linked devices list in Drobox security panel
+```
 
+Run:
+```
 podman run --hostname=$DROPBOX_HOSTNAME --name dbox -d -v $DROPBOX_DIR:/root dbox
+```
 
-# or (for lansync):
-
+or (for lansync):
+```
 podman run --hostname=$DROPBOX_HOSTNAME --name dbox --network=host -d -v $DROPBOX_DIR:/root dbox
+```
+
+or with podman compose (review and edit it first):
+```
+podman-compose -f dbox.yml up -d
+```
+
+Manage with Systemd podman-dbox user unit (put in `~/.config/systemd/user/podman-dbox.service`):
+```
+systemctl --user daemon-reload
+
+systemctl --user status podman-dbox
+
+systemctl --user start  podman-dbox
+
+# autostart on boot:
+systemctl --user enable  podman-dbox
+
+# logs:
+journalctl --user -xf -u podman-dbox
 ```
 
 Ports to be whitelisted for lansync: 17500/tcp 17500/udp 17600-17608/tcp
