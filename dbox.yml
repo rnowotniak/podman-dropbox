@@ -1,0 +1,19 @@
+
+version: '3.8'
+services:
+  dbox:
+    image: dbox
+    container_name: dbox
+    hostname: ${DROPBOX_HOSTNAME}
+
+    volumes:
+      - ${DROPBOX_DIR}:/root
+
+    networks: # "host" for lansync
+      - host 
+
+    restart: "no" # assumes that the container is managed by systemd
+ 
+networks: # for lansync
+  host:
+ 
